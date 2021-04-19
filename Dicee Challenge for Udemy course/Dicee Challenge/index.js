@@ -1,5 +1,5 @@
-var img1 = document.querySelector(".img1");
-var img2 = document.querySelector(".img2");
+var img1 = document.getElementById("img1");
+var img2 = document.getElementById("img2");
 
 function rollDices() {
     var randomNumber1 = Math.floor(Math.random() * 6) + 1;
