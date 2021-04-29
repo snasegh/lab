@@ -113,31 +113,6 @@ function buttonAnimation(colour) {
 }
 
 function playSound(colour) {
-    //Plays a sound based on the colour that is active
-    switch (colour) {
-        case "red":
-            const redSound = new Audio('sounds/red.mp3');
-            redSound.play();
-            break;
-
-        case "blue":
-            const blueSound = new Audio('sounds/blue.mp3');
-            blueSound.play();
-            break;
-
-        case "green": 
-            const greenSound = new Audio('sounds/green.mp3');
-            greenSound.play();
-            break;
-
-        case "yellow":
-            const yellowSound = new Audio('sounds/yellow.mp3');
-            yellowSound.play();
-            break;
-    
-        default:
-            const wrongSound = new Audio('sounds/wrong.mp3');
-            wrongSound.play();
-            break;
-    }
+	let sound = new Audio(`sounds/${colour}.mp3`);
+	sound.play();
 }
