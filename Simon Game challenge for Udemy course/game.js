@@ -1,6 +1,6 @@
 //Game constants
 const gamePattern = [];
-const userClickedPattern = [];
+let userClickedPattern = [];
 const buttonColours = ['red', 'blue', 'green', 'yellow'];
 let gameHasStarted = false;
 let level = 0;
@@ -10,7 +10,7 @@ function updateHeader() {
 }
 
 let header = document.getElementById('level-title');
-let randomChosenColour
+let randomChosenColour;
 
 const blueButton = document.getElementById('blue');
 const redButton = document.getElementById('red');
@@ -18,9 +18,6 @@ const greenButton = document.getElementById('green');
 const yellowButton = document.getElementById('yellow');
 const buttons = document.querySelectorAll('.btn');
 const numberOfButtons = document.querySelectorAll('.btn').length;
-
-
-gamePattern.push(randomChosenColour);
 
 
 for (let i = 0; i < numberOfButtons; i++) {
@@ -43,24 +40,29 @@ document.addEventListener("keypress", function() {
     if (gameHasStarted == false) {
         nextSequence();
         gameHasStarted = true;
-        console.log(gameHasStarted);
+        console.log("Game state = " + gameHasStarted);
     }
  });
 
 function nextSequence() {
     level = level + 1;
-    console.log(level);
+    console.log("Current level is " + level);
     updateHeader();
     randomChosenColour = buttonColours[Math.floor(Math.random() * 4)];
+    gamePattern.push(randomChosenColour);
     buttonAnimation(randomChosenColour);
+    
+    if (userClickedPattern != []) {
+        userClickedPattern = [];   
+    }
 }
 
 function checkAnswer(currentLevel) {
-    console.log(currentLevel);
+    console.log("The current level is " + currentLevel);
     if (userClickedPattern[currentLevel] == gamePattern[currentLevel]) {
-        console.log("success");
+        console.log("Alright! The color you selected mathed the game pattern array");
     } else {
-        console.log("wrong");
+        console.log("Oopps.. The color you selected did not match the game pattern array");
     }
 }
 
