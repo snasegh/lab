@@ -1,15 +1,14 @@
 //Game constants
-const gamePattern = [];
+let gamePattern = [];
 let userClickedPattern = [];
 const buttonColours = ['red', 'blue', 'green', 'yellow'];
 let gameHasStarted = false;
 let level = 0;
 
-function updateHeader() {
-    header.innerHTML = "Level " + level;
+function updateHeader(level) {
+    document.getElementById('level-title').innerHTML = "Level " + level;
 }
 
-let header = document.getElementById('level-title');
 let randomChosenColour;
 
 const blueButton = document.getElementById('blue');
@@ -100,16 +99,13 @@ function checkAnswer(currentLevel) {
 */
 
 
-function buttonAnimation(colour) {
-
-    //Activates flash
-    let flash = document.getElementById(colour);
-    let activateFlash = flash.classList;
-    activateFlash.add("pressed");
-    setTimeout(function () {
-        activateFlash.remove("pressed");
-    },100);
-
+function buttonAnimation(randomChosenColour) {
+	//Activates flash on a button
+	let btn = document.getElementById(randomChosenColour).classList;
+	btn.add("pressed");
+	setTimeout(function () {
+		btn.remove("pressed");
+	}, 100);
 }
 
 function playSound(colour) {
