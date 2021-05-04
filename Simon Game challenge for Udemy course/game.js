@@ -4,14 +4,7 @@ let userClickedPattern = [];
 const buttonColours = ['red', 'blue', 'green', 'yellow'];
 let gameHasStarted = false;
 let level = 0;
-
-function updateHeader() {
-    header.innerHTML = "Level " + level;
-}
-
-let header = document.getElementById('level-title');
 let randomChosenColour;
-
 const blueButton = document.getElementById('blue');
 const redButton = document.getElementById('red');
 const greenButton = document.getElementById('green');
@@ -19,19 +12,28 @@ const yellowButton = document.getElementById('yellow');
 const buttons = document.querySelectorAll('.btn');
 const numberOfButtons = document.querySelectorAll('.btn').length;
 
+// Updates header logic
+let header = document.getElementById('level-title');
+function updateHeader() {
+    header.innerHTML = "Level " + level;
+}
 
+
+//Identifies which button was pressed and checks it against the pattern Simon has chosen
 for (let i = 0; i < numberOfButtons; i++) {
     document.querySelectorAll(".btn")[i].addEventListener("click", function () {
-    const userChosenColour = buttons[i].id;
-    userClickedPattern.push(userChosenColour);
-    console.log("You clicked the button " + userChosenColour);
-    console.log("The current user clicked colors are " + userClickedPattern);
-    console.log("Simon has chosen the colors " + gamePattern);
-    playSound(userChosenColour);
-    buttonAnimation(userChosenColour);
-    checkAnswer();
-    nextSequence();
+        const userChosenColour = buttons[i].id;
+        userClickedPattern.push(userChosenColour);
+        console.log("You clicked the button " + userChosenColour);
+        console.log("The current user clicked colors are " + userClickedPattern);
+        console.log("Simon has chosen the colors " + gamePattern);
+        playSound(userChosenColour);
+        buttonAnimation(userChosenColour);
+        checkAnswer();
 
+        if (JSON.stringify(gamePattern) == JSON.stringify(userClickedPattern)) {
+            nextSequence();
+        }
     });  
 
 }
@@ -58,21 +60,6 @@ function nextSequence() {
     }
     console.log("-------------A new sequence has started-------------");
 }
-
-
-/* 
-
-    I'm really stuck..
-    I don't know how to write the code to check if the gamePattern array
-    matches the userClickedPattern array.. It seems to clear in my head,
-    but I can't for whatever reason convert my thoughts into code....
-    
-    To whoever reads this, if I in a future commit found a solution, I got help..
-    Which is probably not a bad thing (to ask for help), but my demons told me I need 
-    to figure this out myself..
-
-
-*/ 
 
 function checkAnswer() {
     for (let i = 0; i < gamePattern.length; i++) {
