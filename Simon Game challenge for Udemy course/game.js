@@ -4,6 +4,7 @@ let userClickedPattern = [];
 const buttonColours = ['red', 'blue', 'green', 'yellow'];
 let gameHasStarted = false;
 let level = 0;
+let clickCounter = 0;
 let randomChosenColour;
 const blueButton = document.getElementById('blue');
 const redButton = document.getElementById('red');
@@ -14,6 +15,7 @@ const numberOfButtons = document.querySelectorAll('.btn').length;
 
 // Updates header logic
 let header = document.getElementById('level-title');
+let gameOverTitle = document.getElementById('game-over-title');
 function updateHeader() {
     header.innerHTML = "Level " + level;
 }
@@ -30,9 +32,12 @@ for (let i = 0; i < numberOfButtons; i++) {
         playSound(userChosenColour);
         buttonAnimation(userChosenColour);
         checkAnswer();
+        clickCounter = clickCounter + 1;
 
         if (JSON.stringify(gamePattern) == JSON.stringify(userClickedPattern)) {
-            nextSequence();
+            setTimeout(function () {
+                nextSequence();
+            },500);
         }
     });  
 
@@ -54,6 +59,8 @@ function nextSequence() {
     randomChosenColour = buttonColours[Math.floor(Math.random() * 4)];
     gamePattern.push(randomChosenColour);
     buttonAnimation(randomChosenColour);
+    clickCounter = 0;
+    gameOverTitle.style.opacity = "0"
     
     if (userClickedPattern != []) {
         userClickedPattern = [];   
@@ -62,14 +69,23 @@ function nextSequence() {
 }
 
 function checkAnswer() {
-    for (let i = 0; i < gamePattern.length; i++) {
-        const element = gamePattern[i];
 
-        if (userClickedPattern[i] == gamePattern[i]) {
-            console.log("You got it right");
-        } else {
-            console.log("you got it wrong");
-        }
+    //Debug information
+    console.log("you have clicked " + clickCounter + " times");
+    console.log("The current game pattern color should be " + gamePattern[clickCounter]);
+    console.log(userClickedPattern[clickCounter]);
+    
+    if (gamePattern[clickCounter] === userClickedPattern[clickCounter]) {
+        console.log("Sequence is correct so far");
+    } else {
+        console.log("You failed");
+        gameHasStarted = false;
+        level = 0;
+        clickCounter = 0;
+        randomChosenColour;
+        gamePattern.splice(0, gamePattern.length);
+        header.innerHTML = "Press any Key to Start";
+        gameOverTitle.style.opacity = "1";
         
     }
 }
@@ -94,7 +110,7 @@ function buttonAnimation(colour) {
     activateFlash.add("pressed");
     setTimeout(function () {
         activateFlash.remove("pressed");
-    },100);
+    },200);
 
 }
 
