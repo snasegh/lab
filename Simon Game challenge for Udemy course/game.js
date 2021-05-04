@@ -56,8 +56,7 @@ function nextSequence() {
     if (userClickedPattern != []) {
         userClickedPattern = [];   
     }
-    console.log("A new sequence has started");
-    console.log("--------------------------");
+    console.log("-------------A new sequence has started-------------");
 }
 
 
